@@ -1,5 +1,7 @@
+// 
 import React, { useState } from "react";
-import "./index.css"; // Import CSS file for styling
+import axios from "axios";
+import "./index.css"; // Keep existing styles
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,7 @@ const SignUp = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState(""); // To store success or error messages
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,18 +26,28 @@ const SignUp = () => {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Sign-Up Successful", formData);
-      alert("Sign-Up Successful!");
-      setFormData({ name: "", email: "", password: "" });
+      try {
+        const res = await axios.post("http://localhost:5000/signup", formData);
+        setMessage("Sign-Up Successful! Please Sign In.");
+        setFormData({ name: "", email: "", password: "" });
+
+        // Redirect to SignIn page after successful signup (optional)
+        setTimeout(() => {
+          window.location.href = "/signin";
+        }, 1500);
+      } catch (error) {
+        setMessage(error.response?.data?.message || "Sign-Up failed. Try again.");
+      }
     }
   };
 
   return (
     <div className="signup-container">
       <h2>Sign Up</h2>
+      {message && <p className="message">{message}</p>} {/* Show message */}
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <label>Name</label>

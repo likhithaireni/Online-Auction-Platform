@@ -6,6 +6,7 @@ const AuctionDetails = () => {
   const [auction, setAuction] = useState(null);
 
   useEffect(() => {
+    console.log("Auction ID from url",id);
     fetch(`http://localhost:5000/auctions/${id}`) // Fetch auction data from backend
       .then((res) => res.json())
       .then((data) => setAuction(data))

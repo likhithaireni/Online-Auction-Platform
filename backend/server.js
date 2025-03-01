@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
-const connectDB = require("./db");
+const connectDB = require("./db"); // Import the database connection
 const cors = require("cors");
 
 const app = express();
@@ -60,7 +60,7 @@ app.post("/signin", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    res.json({ message: "Signin successful!", userId: user._id });
+    res.json({ message: "Signin successful!", userId: user._id , token: "dummy-jwt-token",});
   } catch (error) {
     res.status(500).json({ error: "Signin failed!", details: error.message });
   }
@@ -91,7 +91,7 @@ app.get("/auctions", async (req, res) => {
   }
 });
 
-// Bid on Auction
+// Bid on Auction Route
 app.post("/bid/:id", async (req, res) => {
   try {
     const { bidAmount } = req.body;
@@ -126,7 +126,6 @@ app.get("/auctions/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch auction!" });
   }
 });
-
 
 // Start Server
 const PORT = 5000;

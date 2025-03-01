@@ -1,5 +1,7 @@
+
 import React, { useState } from "react";
-import "./index.css"; // Reuse styles from SignUp
+import axios from "axios";
+import "./index.css"; // Keep your existing styles
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,7 @@ const SignIn = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState(""); // To store success or error messages
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,18 +24,29 @@ const SignIn = () => {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Sign-In Successful", formData);
-      alert("Sign-In Successful!");
-      setFormData({ email: "", password: "" });
+      try {
+        const res = await axios.post("http://localhost:5000/signin", formData);
+        localStorage.setItem("token", res.data.token); // Store token for authentication
+        setMessage("Sign-In Successful!");
+        setFormData({ email: "", password: "" });
+
+        // Redirect to dashboard after login (if needed)
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 1000);
+      } catch (error) {
+        setMessage(error.response?.data?.message || "Login failed. Try again.");
+      }
     }
   };
 
   return (
     <div className="signup-container">
       <h2>Sign In</h2>
+      {message && <p className="message">{message}</p>} {/* Show message */}
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <label>Email</label>
