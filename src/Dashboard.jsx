@@ -13,7 +13,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchAuctions = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/auctions");
+        const res = await axios.get("http://localhost:5000/auctions");
         setAuctions(res.data); // Store fetched auctions
       } catch (error) {
         setError("Failed to load auctions. Try again.");

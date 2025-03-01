@@ -8,7 +8,7 @@ const LandingPage = () => {
   const [auctions, setAuctions] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/auctions") 
+    axios.get("http://localhost:5000/auctions") 
       .then((res) => setAuctions(res.data))
       .catch((err) => console.error("Error fetching auctions:", err));
   }, []);
