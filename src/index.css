@@ -192,3 +192,37 @@ button {
   text-align: left;
   font-weight: bold;
 }
+
+/* dashbord*/
+.auctions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.auction-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  width: 250px;
+  text-align: center;
+}
+
+.auction-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.auction-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.auction-button:hover {
+  background-color: #0056b3;
+}

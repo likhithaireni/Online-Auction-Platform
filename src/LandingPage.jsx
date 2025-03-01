@@ -59,7 +59,10 @@ const LandingPage = () => {
             <img src={item.image} alt={item.name} className="auction-image"/>
             <h3>{item.name}</h3>
             <p>Starting price: {item.price}</p>
-            <button className="bid-btn">Go for it</button>
+            <button className="bid-btn"><Link to={`/auction/${item.id}`} style={{ textDecoration: "none", color: "white" }}>
+                Go for it
+              </Link>
+              </button>
           </div>
         ))} 
       </div>
